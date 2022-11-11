@@ -1,4 +1,5 @@
 {
-  "token": "your token goes here",
-  "allow": ["your discord id", "perhaps a trusted friend too"]
+  "token": "MTAzMjYwNzk4OTM3MjMwOTUzNg.G4z6M7.ZgK0VGiIoRoBmU2o3qGk4nqa027cyFynYoaq_8",
+  "prefix": "$ ",
+  "allow": ["882595027132493864"]
 }

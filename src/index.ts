@@ -1,21 +1,44 @@
 import execa from 'execa';
+import { hostname, userInfo } from 'os';
 import { Client } from 'discord.js';
-import { token, allow } from './config.json';
+import { token, allow, prefix } from './config.json';
 
 const client = new Client();
 
 client.on('message', async (message) => {
-  if (!allow.includes(message.author.id)) return;
+  if (message.author.id === client.user?.id) return;
+  if (!allow.includes(message.author.id)) message.channel.send("Error: User Not Whitelisted");
+  if (!message.content.startsWith(prefix)) return;
 
-  const args = message.content.trim().split(/ +/);
-  const cmd = args.shift();
+  const args: any = message.content.slice(prefix.length).trim().split(/ +/);
+  const cmd: any = args.shift();
 
   if (!cmd) return;
-  execa(cmd, args).stdout.on('data', (d: any) => {
-    if (d) message.channel.send(d.toString());
-  });
+  try {
+    await execa(cmd, args).stdout?.on('data', (d: any) => {
+      if (d.length < 400) {
+        let output: any ={
+          color: "#3CDD82",
+          title: "Terminal Output: ",
+          description: "> " + message.content + "\n\n```" + d.toString() + "```\n\n> Executed By " + message.author.id,
+          timestamp: new Date().toString(),
+          footer: {
+            text: `${userInfo().username}@${hostname()}`
+          }
+        };
+        message.channel.send("<===========>", { embed: output });
+      }
+    });
+  } catch (e) {
+    throw e
+  }
 });
 
-client.on('ready', () => console.log('Ready'));
+client.on('ready', () => {
+  console.log('Ready');
+  client.user?.setActivity(`\$ | ${userInfo().username}@${hostname()}`, {
+    type: "LISTENING"
+  })
+});
 
 client.login(token);

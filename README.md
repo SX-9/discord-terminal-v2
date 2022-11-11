@@ -1,3 +1,6 @@
+# Creadits
+Original Version: https://github.com/DeathVenom54/discord-terminal
+
 # Discord Terminal
 
 💻 A Discord bot to conveniently use Discord as your remote terminal
@@ -9,7 +12,7 @@
 1) Clone the repo and install dependencies
 
 ```bash
-git clone https://github.com/DeathVenom54/discord-terminal.git
+git clone https://github.com/SX-9/discord-terminal-v2.git
 cd discord-terminal
 
 # with yarn:
