@@ -1,4 +1,4 @@
-# Creadits
+# Credits
 Original Version: https://github.com/DeathVenom54/discord-terminal
 
 # Discord Terminal
