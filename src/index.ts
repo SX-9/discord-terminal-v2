@@ -6,9 +6,9 @@ import { token, allow, prefix } from './config.json';
 const client = new Client();
 
 client.on('message', async (message) => {
-  if (message.author.id === client.user?.id) return;
-  if (!allow.includes(message.author.id)) message.channel.send("Error: User Not Whitelisted");
   if (!message.content.startsWith(prefix)) return;
+  if (!allow.includes(message.author.id)) return message.channel.send("Error: User Not Whitelisted");
+  if (message.author.id === client.user?.id) return;
 
   const args: any = message.content.slice(prefix.length).trim().split(/ +/);
   const cmd: any = args.shift();
@@ -16,7 +16,7 @@ client.on('message', async (message) => {
   if (!cmd) return;
   try {
     await execa(cmd, args).stdout?.on('data', (d: any) => {
-      if (d.length < 400) {
+      if (d.length < 4000) {
         let output: any ={
           color: "#3CDD82",
           title: "Terminal Output: ",
